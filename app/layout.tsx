@@ -12,7 +12,7 @@ const RootLayout =({children}: Readonly<{ children: React.ReactNode }>) => {
     <html lang="ja">
     <body>
     <main>
-      <section className="relative w-full h-full py-40 min-h-screen">
+      <section className="relative w-full h-full min-h-screen">
         {children}
       </section>
     </main>

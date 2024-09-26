@@ -4,4 +4,6 @@ export interface Element {
   title : string;
   url : string;
   path: string;
+  updated_at: string;
+  published_at: string;
 }

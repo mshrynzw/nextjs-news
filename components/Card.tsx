@@ -14,7 +14,7 @@ const Cards = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get("https://qiita.com/api/v2/items?page=1&per_page=10&query=Next.js OR React OR Nuxt.js OR Vue OR Astro OR Hono OR AI")
+        const response = await axios.get("https://qiita.com/api/v2/items?page=1&per_page=20&query=Next.js OR React OR Nuxt.js OR Vue OR Astro OR Hono OR AI")
         const qiitaArticles: Article[] = []
         response.data.map((element: Element) => {
           qiitaArticles.push(
@@ -23,6 +23,7 @@ const Cards = () => {
               type: "qiita",
               title: element.title,
               url: element.url,
+              updated_at: element.updated_at,
             }
           )
         })
@@ -41,6 +42,7 @@ const Cards = () => {
               type: "zenn",
               title: element.title,
               url: `https://zenn.dev${element.path}`,
+              updated_at: element.published_at,
             }
           )
         })
@@ -56,7 +58,9 @@ const Cards = () => {
 
   return (
     <>
-      {articles.sort(() => Math.random() - 0.5).map((article, index) => (
+      {articles
+        .sort((a, b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime())
+        .map((article, index) => (
         <div className="w-full md:w-4/12 px-4 text-center" key={`${article.type}-${article.id}-${index}`}>
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
             <Link href={article.url} target="_blank">
